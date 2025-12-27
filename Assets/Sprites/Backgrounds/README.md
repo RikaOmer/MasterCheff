@@ -26,3 +26,4 @@ You can provide both versions with suffixes:
 - Consider adding subtle blur/gradient overlays for text readability
 - Match lighting across all backgrounds for consistency
 
+

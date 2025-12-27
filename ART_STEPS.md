@@ -292,3 +292,4 @@ Choose a consistent style across all assets:
 
 For a cooking game, warm colors (oranges, reds, yellows) typically work well with kitchen themes.
 
+
