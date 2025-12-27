@@ -15,3 +15,4 @@ Place 3 power-up icons here (128x128 PNG with transparency):
 - Icons should be easily distinguishable at small sizes
 - Match the overall game art style
 
+

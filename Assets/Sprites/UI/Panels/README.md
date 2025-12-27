@@ -17,3 +17,4 @@ Place panel/frame sprites here (9-slice compatible PNG):
 - panel_dark.png should work as a modal overlay
 - Match the overall kitchen/cooking theme
 
+

@@ -29,3 +29,4 @@ Place 3 judge character sprites here (256x256 or 512x512 PNG with transparency):
 - Loves dishes that "hug the soul"
 - Visual: Warm, grandmotherly, comforting smile, homey apron
 
+

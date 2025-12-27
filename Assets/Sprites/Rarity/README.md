@@ -23,3 +23,4 @@ Place rarity badge sprites here (32x32 PNG with transparency):
 - Gem icons in corresponding colors
 - Border glow effects
 
+

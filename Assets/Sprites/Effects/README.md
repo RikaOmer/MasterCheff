@@ -23,3 +23,4 @@ Place effect sprites here (various sizes PNG with transparency):
 For confetti, consider creating a sprite sheet with multiple confetti shapes/colors,
 or provide several individual confetti pieces (confetti_1.png, confetti_2.png, etc.)
 
+
