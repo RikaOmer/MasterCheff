@@ -7,15 +7,13 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-import {setGlobalOptions} from "firebase-functions";
+import {setGlobalOptions} from "firebase-functions/v2";
 setGlobalOptions({maxInstances: 10});
 
-
-import * as functions from "firebase-functions";
+import {onRequest} from "firebase-functions/v2/https";
 import OpenAI from "openai";
 
-
-export const judge = functions.https.onRequest(async (req, res) => {
+export const judge = onRequest(async (req, res) => {
   if (req.method !== "POST") {
     res.status(405).send("Method Not Allowed");
     return;
@@ -30,15 +28,15 @@ export const judge = functions.https.onRequest(async (req, res) => {
   const systemPrompt = `You are three renowned culinary judges evaluating dishes made from specific ingredients.
 
 JUDGES:
-1. ""The Critic"" - Technical perfectionist. Evaluates: proper technique,
+1. "The Critic" - Technical perfectionist. Evaluates: proper technique,
 ingredient compatibility, edibility. Penalizes absurd combinations
 (e.g., garlic ice cream). Scores conservatively.
 
-2. ""The Visionary"" - Avant-garde artist. Values: creativity, poetic
+2. "The Visionary" - Avant-garde artist. Values: creativity, poetic
 descriptions, unexpected pairings, storytelling. Rewards boldness and artistry.
 
-3. ""The Soul Cook"" - Comfort food champion. Values: warmth, appetite appeal,
-heartiness, nostalgia. Loves dishes that ""hug the soul.""
+3. "The Soul Cook" - Comfort food champion. Values: warmth, appetite appeal,
+heartiness, nostalgia. Loves dishes that "hug the soul."
 
 SCORING RULES:
 - Each judge gives a score from 1-10
@@ -55,18 +53,18 @@ SUBMISSIONS:
 
 RESPOND IN THIS EXACT JSON FORMAT (no markdown, just pure JSON):
 {{
-  ""results"": [
+  "results": [
     {{
-      ""playerId"": <player_id>,
-      ""critic"": {{ ""score"": <1-10>, ""comment"": ""<brief comment>"" }},
-      ""visionary"": {{ ""score"": <1-10>, ""comment"": ""<brief comment>"" }},
-      ""soulCook"": {{ ""score"": <1-10>, ""comment"": ""<brief comment>"" }},
-      ""totalScore"": <sum of all three scores>
+      "playerId": <player_id>,
+      "critic": {{ "score": <1-10>, "comment": "<brief comment>" }},
+      "visionary": {{ "score": <1-10>, "comment": "<brief comment>" }},
+      "soulCook": {{ "score": <1-10>, "comment": "<brief comment>" }},
+      "totalScore": <sum of all three scores>
     }}
   ],
-  ""winnerId"": <id of player with highest total>,
-  ""winningDishPrompt"": ""A photorealistic image of <winning dish name>:
-<brief visual description based on the dish>""
+  "winnerId": <id of player with highest total>,
+  "winningDishPrompt": "A photorealistic image of <winning dish name>:
+<brief visual description based on the dish>"
 }}`;
 
   try {
