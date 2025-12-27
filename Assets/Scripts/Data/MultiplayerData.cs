@@ -363,5 +363,19 @@ namespace MasterCheff.Data
         public string comment;
     }
 
+    /// <summary>
+    /// Result from image generation API (JSON naming convention)
+    /// </summary>
+    [Serializable]
+    public class ImageGenerationResult
+    {
+        public string imageUrl;
+        public string prompt;
+
+        // Property for PascalCase access (Unity convention)
+        public string ImageUrl => imageUrl;
+        public string Prompt => prompt;
+    }
+
 }
 

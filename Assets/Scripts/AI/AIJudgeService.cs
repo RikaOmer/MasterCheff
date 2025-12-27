@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 using MasterCheff.Core;
 using MasterCheff.Data;
 
@@ -122,6 +123,109 @@ RESPOND IN THIS EXACT JSON FORMAT (no markdown, just pure JSON):
                 ingredients.Ingredient1, 
                 ingredients.Ingredient2, 
                 submissionsText);
+        }
+
+        /// <summary>
+        /// Generate an image from a prompt using the backend API
+        /// </summary>
+        public async Task<ImageGenerationResult> GenerateDishImage(string prompt)
+        {
+            if (string.IsNullOrEmpty(prompt))
+            {
+                Debug.LogWarning("[AIJudgeService] Empty prompt for image generation");
+                return null;
+            }
+
+            try
+            {
+                if (RelayAPIClient.HasInstance)
+                {
+                    string url = $"{RelayAPIClient.Instance.BaseUrl}/generate-image";
+                    string jsonBody = JsonUtility.ToJson(new { prompt = prompt });
+
+                    Debug.Log($"[AIJudgeService] Requesting image generation: {prompt.Substring(0, Mathf.Min(50, prompt.Length))}...");
+
+                    using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
+                    {
+                        byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonBody);
+                        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+                        request.downloadHandler = new DownloadHandlerBuffer();
+                        request.SetRequestHeader("Content-Type", "application/json");
+                        request.timeout = 60;
+
+                        var operation = request.SendWebRequest();
+
+                        while (!operation.isDone)
+                        {
+                            await Task.Yield();
+                        }
+
+                        if (request.result == UnityWebRequest.Result.Success)
+                        {
+                            string response = request.downloadHandler.text;
+                            var result = JsonUtility.FromJson<ImageGenerationResult>(response);
+                            Debug.Log($"[AIJudgeService] Image generated: {result.ImageUrl}");
+                            return result;
+                        }
+                        else
+                        {
+                            Debug.LogError($"[AIJudgeService] Image generation failed: {request.error}");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[AIJudgeService] Image generation error: {ex.Message}");
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Download an image from a URL and return it as a Texture2D
+        /// </summary>
+        public async Task<Texture2D> DownloadDishImage(string imageUrl)
+        {
+            if (string.IsNullOrEmpty(imageUrl))
+            {
+                Debug.LogWarning("[AIJudgeService] Empty image URL");
+                return null;
+            }
+
+            try
+            {
+                Debug.Log($"[AIJudgeService] Downloading image from: {imageUrl}");
+
+                using (UnityWebRequest request = UnityWebRequestTexture.GetTexture(imageUrl))
+                {
+                    request.timeout = 30;
+
+                    var operation = request.SendWebRequest();
+
+                    while (!operation.isDone)
+                    {
+                        await Task.Yield();
+                    }
+
+                    if (request.result == UnityWebRequest.Result.Success)
+                    {
+                        Texture2D texture = DownloadHandlerTexture.GetContent(request);
+                        Debug.Log($"[AIJudgeService] Image downloaded: {texture.width}x{texture.height}");
+                        return texture;
+                    }
+                    else
+                    {
+                        Debug.LogError($"[AIJudgeService] Image download failed: {request.error}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[AIJudgeService] Image download error: {ex.Message}");
+            }
+
+            return null;
         }
 
         #endregion

@@ -6,6 +6,7 @@ using MasterCheff.Core;
 using MasterCheff.Data;
 using MasterCheff.Gameplay;
 using MasterCheff.Managers;
+using MasterCheff.UI.Components;
 
 namespace MasterCheff.UI.Panels
 {
