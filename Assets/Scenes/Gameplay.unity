@@ -762,7 +762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9d31ed9bad5f70428fc1a28adcaac52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseUrl: https://your-project.cloudfunctions.net
+  _baseUrl: https://judge-vo3l255xbq-uc.a.run.app
   _judgeEndpoint: /judge
   _judgeTimeoutSeconds: 30
   _maxRetries: 2
@@ -5052,7 +5052,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15.85
+  m_fontSize: 18.05
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7776,7 +7776,7 @@ MonoBehaviour:
   _timeExtensionBonus: 15
   _totalRounds: 10
   _minPlayersToStart: 2
-  _ingredientDatabase: {fileID: 0}
+  _ingredientDatabase: {fileID: 11400000, guid: f0374371dead3034781e7542cdfb6a54, type: 2}
 --- !u!4 &1884915611
 Transform:
   m_ObjectHideFlags: 0

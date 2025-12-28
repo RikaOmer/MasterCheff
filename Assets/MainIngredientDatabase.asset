@@ -1,0 +1,406 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1832966ae6e0d84795bb469d65df32d, type: 3}
+  m_Name: MainIngredientDatabase
+  m_EditorClassIdentifier: 
+  _categories:
+  - CategoryType: 0
+    Ingredients:
+    - Name: Chicken
+      IconName: Chicken
+      Icon: {fileID: 21300000, guid: 1918dc5f378017f469c0fad4874f962e, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Beef
+      IconName: Beef
+      Icon: {fileID: 21300000, guid: a3115ffbbd906a74dbac22eef05c047f, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Pork
+      IconName: Pork
+      Icon: {fileID: 21300000, guid: 214dccf821165a94cba64f9ae09c9250, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Salmon
+      IconName: Salmon
+      Icon: {fileID: 21300000, guid: 8d88cb016d71d114c9469a58f6220ac6, type: 3}
+      Rarity: 1
+      Description: 
+    - Name: Shrimp
+      IconName: Shrimp
+      Icon: {fileID: 21300000, guid: 313babca01ac9694f89c5f4737b5462f, type: 3}
+      Rarity: 1
+      Description: 
+    - Name: Lobster
+      IconName: Lobster
+      Icon: {fileID: 21300000, guid: b987736ca911299408dffda9ce0e52e4, type: 3}
+      Rarity: 2
+      Description: 
+    - Name: Duck
+      IconName: Duck
+      Icon: {fileID: 21300000, guid: 27f53df5395ea204e83962e9f4dd5a51, type: 3}
+      Rarity: 2
+      Description: 
+    - Name: Wagyu Beef
+      IconName: Wagyu Beef
+      Icon: {fileID: 21300000, guid: 9a7e5d2cc9daf62478a24a5fc387ae0a, type: 3}
+      Rarity: 3
+      Description: 
+    - Name: Tofu
+      IconName: Tofu
+      Icon: {fileID: 21300000, guid: 0aeedfd4ee5449b49a232334cf556158, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Eggs
+      IconName: Eggs
+      Icon: {fileID: 21300000, guid: 2686874668776b342bd32166d4865982, type: 3}
+      Rarity: 0
+      Description: 
+  - CategoryType: 2
+    Ingredients:
+    - Name: Lemon
+      IconName: Lemon
+      Icon: {fileID: 21300000, guid: e1f4de341e0cb0c43a8dfb247ba3002d, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Lime
+      IconName: Lime
+      Icon: {fileID: 21300000, guid: dfcf0ed8d51792e4b9c95b2b9bf73240, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Orange
+      IconName: Orange
+      Icon: {fileID: 21300000, guid: a77b0e55d2ff1a948b1722c80eeee9e2, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Mango
+      IconName: Mango
+      Icon: {fileID: 21300000, guid: 21df907b9525c2744bb82a55bced4623, type: 3}
+      Rarity: 1
+      Description: 
+    - Name: Pineapple
+      IconName: Pineapple
+      Icon: {fileID: 21300000, guid: b0014ecb968c9f542a435cc69c399dc2, type: 3}
+      Rarity: 1
+      Description: 
+    - Name: Passion Fruit
+      IconName: Passion Fruit
+      Icon: {fileID: 21300000, guid: 99bb1edb5f6967d409a03aa726360eb1, type: 3}
+      Rarity: 2
+      Description: 
+    - Name: Dragon Fruit
+      IconName: Dragon Fruit
+      Icon: {fileID: 21300000, guid: edd6b2d792af6c446bddef69bace5d5c, type: 3}
+      Rarity: 2
+      Description: 
+    - Name: Truffle
+      IconName: Truffle
+      Icon: {fileID: 21300000, guid: db3d65ba88e49344a8a15ded1960d103, type: 3}
+      Rarity: 3
+      Description: 
+    - Name: Apple
+      IconName: Apple
+      Icon: {fileID: 21300000, guid: be75ad2330066ab45b33a351df759b7e, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Strawberry
+      IconName: Strawberry
+      Icon: {fileID: 21300000, guid: 04e8f2a96574c6a4dbfec4082fe33294, type: 3}
+      Rarity: 0
+      Description: 
+  - CategoryType: 1
+    Ingredients:
+    - Name: Garlic
+      IconName: Garlic
+      Icon: {fileID: 21300000, guid: 845e421cc6ed1b84f915e42149c868ed, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Onion
+      IconName: Onion
+      Icon: {fileID: 21300000, guid: d15cbcc1dfce43644ac842dd578adad1, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Tomato
+      IconName: Tomato
+      Icon: {fileID: 21300000, guid: d7d07a9118f2d0c43bf36359012a6c11, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Spinach
+      IconName: Spinach
+      Icon: {fileID: 21300000, guid: f7b7d995d7c10404ebfe790c657fe67a, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Asparagus
+      IconName: Asparagus
+      Icon: {fileID: 21300000, guid: 46270651b08e22c419929722541b77ea, type: 3}
+      Rarity: 1
+      Description: 
+    - Name: Artichoke
+      IconName: Artichoke
+      Icon: {fileID: 21300000, guid: c0ffa8e7a4b3aec43b2f3ca7af23cc68, type: 3}
+      Rarity: 2
+      Description: 
+    - Name: Matsutake Mushroom
+      IconName: Matsutake Mushroom
+      Icon: {fileID: 21300000, guid: 9ca35f25eb646bc4cb25d482aacf7599, type: 3}
+      Rarity: 3
+      Description: 
+    - Name: Bell Pepper
+      IconName: Bell Pepper
+      Icon: {fileID: 21300000, guid: c9051ff3277d7e2408c04b25a5ab0195, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Carrot
+      IconName: Carrot
+      Icon: {fileID: 21300000, guid: f8f102be63e131b4ba834307dee408df, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Eggplant
+      IconName: Eggplant
+      Icon: {fileID: 21300000, guid: 792cd9218f878e64183f981c8143f7b8, type: 3}
+      Rarity: 1
+      Description: 
+  - CategoryType: 4
+    Ingredients:
+    - Name: Chili
+      IconName: Chili
+      Icon: {fileID: 21300000, guid: 5bec8b53231498648be5c40d92db5395, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Black Pepper
+      IconName: Black Pepper
+      Icon: {fileID: 21300000, guid: 64fc4beb455c0af48bcc1c004a897d7f, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Cumin
+      IconName: Cumin
+      Icon: {fileID: 21300000, guid: 42088fa60acb00d4ea36fc08d7185a16, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Paprika
+      IconName: Paprika
+      Icon: {fileID: 21300000, guid: 7442578b7c9320a439f333c1b86d2e93, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Saffron
+      IconName: Saffron
+      Icon: {fileID: 21300000, guid: 26750d0f5a351e74992485cd1898bffb, type: 3}
+      Rarity: 3
+      Description: 
+    - Name: Cardamom
+      IconName: Cardamom
+      Icon: {fileID: 21300000, guid: c28e0323a2beceb41acd9bcc6b418775, type: 3}
+      Rarity: 1
+      Description: 
+    - Name: Star Anise
+      IconName: Star Anise
+      Icon: {fileID: 21300000, guid: 76b564f1d5030764bb176ad7a1dc461d, type: 3}
+      Rarity: 2
+      Description: 
+    - Name: Cinnamon
+      IconName: Cinnamon
+      Icon: {fileID: 21300000, guid: 8c5fd8c5356696e4ab2ae36c067379e2, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Ginger
+      IconName: Ginger
+      Icon: {fileID: 21300000, guid: 3911ee1bd4485894e87e8ddfe1e5e4d1, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Turmeric
+      IconName: turmeric
+      Icon: {fileID: 21300000, guid: 377705021ff1a7d4b8d5c6fbeeeb4bc9, type: 3}
+      Rarity: 1
+      Description: 
+  - CategoryType: 3
+    Ingredients:
+    - Name: Butter
+      IconName: Butter
+      Icon: {fileID: 21300000, guid: e26013984b983cb49986d8d67467e17b, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Cream
+      IconName: Cream
+      Icon: {fileID: 21300000, guid: b92002f2d295d4b48a80804e7fc1f4c4, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Cheese
+      IconName: Goat Cheese
+      Icon: {fileID: 21300000, guid: be01e332021cb2e42956f9b77e7356d2, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Parmesan
+      IconName: Parmesan
+      Icon: {fileID: 21300000, guid: 544d495aa2fdb7642883188d4931bacb, type: 3}
+      Rarity: 1
+      Description: 
+    - Name: Goat Cheese
+      IconName: Goat Cheese
+      Icon: {fileID: 21300000, guid: be01e332021cb2e42956f9b77e7356d2, type: 3}
+      Rarity: 1
+      Description: 
+    - Name: Burrata
+      IconName: Burrata
+      Icon: {fileID: 21300000, guid: 670d33b51dac910429bc8578abb620fd, type: 3}
+      Rarity: 2
+      Description: 
+    - Name: "Aged Gruy\xE8re"
+      IconName: Aged Gruyere
+      Icon: {fileID: 21300000, guid: 928cf3b131daeee468e44c62a421c53b, type: 3}
+      Rarity: 2
+      Description: 
+    - Name: Mascarpone
+      IconName: Mascarpone
+      Icon: {fileID: 21300000, guid: cac082fbc75b73f4d8cda0b59319d697, type: 3}
+      Rarity: 1
+      Description: 
+    - Name: Yogurt
+      IconName: yogurt
+      Icon: {fileID: 21300000, guid: 99733c361cbe6a040bcb0a0ca5e2f799, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Ricotta
+      IconName: ricotta
+      Icon: {fileID: 21300000, guid: 9265c28f051eca64387de2e0b63dd399, type: 3}
+      Rarity: 0
+      Description: 
+  - CategoryType: 6
+    Ingredients:
+    - Name: Dark Chocolate
+      IconName: Dark Chocolate
+      Icon: {fileID: 21300000, guid: 8d824b24d6626ae49b1e6228541e32f6, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Honey
+      IconName: Honey
+      Icon: {fileID: 21300000, guid: 93c8d415c8aa4dc4ea1c4396739e248c, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Vanilla
+      IconName: Vanilla
+      Icon: {fileID: 21300000, guid: 986a51620010e9a46b3239f3a6054333, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Maple Syrup
+      IconName: Maple Syrup
+      Icon: {fileID: 21300000, guid: 7828b6d0479a0df47a28eaf6abbd063d, type: 3}
+      Rarity: 1
+      Description: 
+    - Name: Caramel
+      IconName: Caramel
+      Icon: {fileID: 21300000, guid: ec255c2d3c445674886b36930fc3904d, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: White Chocolate
+      IconName: White Chocolate
+      Icon: {fileID: 21300000, guid: 3ebc37a1bfc702645837c8c0c272022a, type: 3}
+      Rarity: 1
+      Description: 
+    - Name: Matcha
+      IconName: Matcha
+      Icon: {fileID: 21300000, guid: f424096a721a1fe428c7179c286678c3, type: 3}
+      Rarity: 2
+      Description: 
+    - Name: Lavender
+      IconName: Lavender
+      Icon: {fileID: 21300000, guid: 0e732ce69da599743911c4b70d14e1d5, type: 3}
+      Rarity: 2
+      Description: 
+    - Name: Rose Water
+      IconName: Rose Water
+      Icon: {fileID: 21300000, guid: 7314083066dab4a41a013dd6e38c1fd8, type: 3}
+      Rarity: 2
+      Description: 
+    - Name: Belgian Chocolate
+      IconName: Belgian Chocolate
+      Icon: {fileID: 21300000, guid: faa5a1c0c3904ca4da39997a521b78db, type: 3}
+      Rarity: 3
+      Description: 
+  - CategoryType: 5
+    Ingredients:
+    - Name: Basil
+      IconName: Basil
+      Icon: {fileID: 21300000, guid: 6d0a8bfbe2925c84d831ed59f5e4645f, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Cilantro
+      IconName: Cilantro
+      Icon: {fileID: 21300000, guid: 7eb41199a813fcf409a08052da6ea21b, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Mint
+      IconName: Mint
+      Icon: {fileID: 21300000, guid: 92feda047f59a9047aac096b265b5567, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Rosemary
+      IconName: Rosemary
+      Icon: {fileID: 21300000, guid: 15110d2429f929240bbc4dfd0caeba8f, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Thyme
+      IconName: Thyme
+      Icon: {fileID: 21300000, guid: 3d0c6970577886e4298bb3566a57ab30, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Oregano
+      IconName: Oregano
+      Icon: {fileID: 21300000, guid: a66ac82db544d664895119fea7e0bd2d, type: 3}
+      Rarity: 0
+      Description: 
+    - Name: Dill
+      IconName: Dill
+      Icon: {fileID: 21300000, guid: de76f73dfe8157b4d8677079ee76ba35, type: 3}
+      Rarity: 1
+      Description: 
+    - Name: Tarragon
+      IconName: Tarragon
+      Icon: {fileID: 21300000, guid: cd2e668fa0ee035468669cea03a3156e, type: 3}
+      Rarity: 2
+      Description: 
+    - Name: Lemongrass
+      IconName: Lemongrass
+      Icon: {fileID: 21300000, guid: 5d590ad307bbcd841a75330006cdd6a3, type: 3}
+      Rarity: 1
+      Description: 
+    - Name: Shiso
+      IconName: Shiso
+      Icon: {fileID: 21300000, guid: af0e72e4ee34c3241b73a8aea4dbef23, type: 3}
+      Rarity: 2
+      Description: 
+  _allowSameCategoryPairing: 0
+  _minCategoryDifference: 1
+  _fallbackIngredients:
+  - Chicken
+  - Beef
+  - Salmon
+  - Shrimp
+  - Lemon
+  - Lime
+  - Orange
+  - Mango
+  - Garlic
+  - Onion
+  - Ginger
+  - Basil
+  - Chocolate
+  - Vanilla
+  - Cinnamon
+  - Honey
+  - Butter
+  - Cream
+  - Cheese
+  - Olive Oil
+  - Chili
+  - Pepper
+  - Cumin
+  - Paprika

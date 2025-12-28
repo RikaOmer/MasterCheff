@@ -265,8 +265,33 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1808577728263247679, guid: 3a0084cb6cf727c41994217696a3d815, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 581472937}
   m_SourcePrefab: {fileID: 100100000, guid: 3a0084cb6cf727c41994217696a3d815, type: 3}
+--- !u!1 &581472936 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1808577728263247679, guid: 3a0084cb6cf727c41994217696a3d815, type: 3}
+  m_PrefabInstance: {fileID: 581472935}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &581472937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581472936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9d31ed9bad5f70428fc1a28adcaac52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseUrl: https://judge-vo3l255xbq-uc.a.run.app
+  _judgeEndpoint: /judge
+  _judgeTimeoutSeconds: 30
+  _maxRetries: 2
+  _retryDelaySeconds: 1
 --- !u!1 &584532835
 GameObject:
   m_ObjectHideFlags: 0

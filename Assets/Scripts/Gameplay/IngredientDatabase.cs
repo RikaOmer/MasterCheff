@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using MasterCheff.Data;
 
@@ -346,6 +347,263 @@ namespace MasterCheff.Gameplay
 
             UnityEditor.EditorUtility.SetDirty(this);
             Debug.Log("[IngredientDatabase] Populated with default ingredients");
+        }
+
+        /// <summary>
+        /// Scan for sprites in Assets/Sprites/Ingredients/ and auto-assign them to matching ingredients
+        /// </summary>
+        [ContextMenu("Scan for Sprites")]
+        private void ScanForSprites()
+        {
+            if (_categories == null || _categories.Length == 0)
+            {
+                Debug.LogWarning("[IngredientDatabase] No categories found. Please populate ingredients first.");
+                return;
+            }
+
+            // Map category types to folder names
+            Dictionary<IngredientCategoryType, string> categoryFolders = new Dictionary<IngredientCategoryType, string>
+            {
+                { IngredientCategoryType.Proteins, "Proteins" },
+                { IngredientCategoryType.Fruits, "Fruits" },
+                { IngredientCategoryType.Vegetables, "Vegetables" },
+                { IngredientCategoryType.Spices, "Spices" },
+                { IngredientCategoryType.Dairy, "Dairy" },
+                { IngredientCategoryType.Sweets, "Sweets" },
+                { IngredientCategoryType.Herbs, "Herbs" },
+                { IngredientCategoryType.Grains, "Grains" },
+                { IngredientCategoryType.Seafood, "Seafood" },
+                { IngredientCategoryType.Other, "Other" }
+            };
+
+            int matchedCount = 0;
+            int totalIngredients = 0;
+            int totalSpritesFound = 0;
+
+            foreach (var category in _categories)
+            {
+                if (category.Ingredients == null) continue;
+
+                string folderName = categoryFolders.ContainsKey(category.CategoryType) 
+                    ? categoryFolders[category.CategoryType] 
+                    : category.CategoryType.ToString();
+
+                string folderPath = $"Assets/Sprites/Ingredients/{folderName}";
+                
+                // Check if folder exists
+                if (!UnityEditor.AssetDatabase.IsValidFolder(folderPath))
+                {
+                    Debug.LogWarning($"[IngredientDatabase] Folder not found: {folderPath}");
+                    continue;
+                }
+                
+                // Find all texture assets (PNG files are imported as Texture2D)
+                string[] textureGuids = UnityEditor.AssetDatabase.FindAssets("t:Texture2D", new[] { folderPath });
+                
+                // Create a dictionary of sprite names (normalized) to sprites
+                Dictionary<string, Sprite> spriteMap = new Dictionary<string, Sprite>();
+                
+                // Process each texture file
+                foreach (string guid in textureGuids)
+                {
+                    string assetPath = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
+                    
+                    // Get the texture importer to check/change settings
+                    UnityEditor.TextureImporter importer = UnityEditor.AssetImporter.GetAtPath(assetPath) as UnityEditor.TextureImporter;
+                    
+                    if (importer != null)
+                    {
+                        // Check if it's already set as a sprite
+                        bool needsReimport = false;
+                        if (importer.textureType != UnityEditor.TextureImporterType.Sprite)
+                        {
+                            importer.textureType = UnityEditor.TextureImporterType.Sprite;
+                            importer.spriteImportMode = UnityEditor.SpriteImportMode.Single;
+                            needsReimport = true;
+                        }
+                        
+                        if (needsReimport)
+                        {
+                            UnityEditor.AssetDatabase.ImportAsset(assetPath, UnityEditor.ImportAssetOptions.ForceUpdate);
+                        }
+                    }
+                    
+                    // Now try to load as sprite
+                    Sprite sprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>(assetPath);
+                    
+                    if (sprite != null)
+                    {
+                        string normalizedName = NormalizeName(sprite.name);
+                        if (!spriteMap.ContainsKey(normalizedName))
+                        {
+                            spriteMap[normalizedName] = sprite;
+                            totalSpritesFound++;
+                        }
+                    }
+                    else
+                    {
+                        // Try loading all sprites from the asset (for sprite sheets)
+                        Sprite[] sprites = UnityEditor.AssetDatabase.LoadAllAssetsAtPath(assetPath)
+                            .OfType<Sprite>()
+                            .ToArray();
+                        
+                        foreach (var s in sprites)
+                        {
+                            if (s != null)
+                            {
+                                string normalizedName = NormalizeName(s.name);
+                                if (!spriteMap.ContainsKey(normalizedName))
+                                {
+                                    spriteMap[normalizedName] = s;
+                                    totalSpritesFound++;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Debug: Log found sprites for this category
+                if (spriteMap.Count > 0)
+                {
+                    Debug.Log($"[IngredientDatabase] Found {spriteMap.Count} sprites in {folderName}: {string.Join(", ", spriteMap.Keys)}");
+                }
+
+                // Match ingredients to sprites
+                foreach (var ingredient in category.Ingredients)
+                {
+                    totalIngredients++;
+                    string normalizedIngredientName = NormalizeName(ingredient.Name);
+                    
+                    if (spriteMap.ContainsKey(normalizedIngredientName))
+                    {
+                        ingredient.Icon = spriteMap[normalizedIngredientName];
+                        ingredient.IconName = spriteMap[normalizedIngredientName].name;
+                        matchedCount++;
+                    }
+                    else
+                    {
+                        // Try fuzzy matching - check if any sprite name contains the ingredient name or vice versa
+                        foreach (var kvp in spriteMap)
+                        {
+                            if (kvp.Key.Contains(normalizedIngredientName) || normalizedIngredientName.Contains(kvp.Key))
+                            {
+                                ingredient.Icon = kvp.Value;
+                                ingredient.IconName = kvp.Value.name;
+                                matchedCount++;
+                                Debug.Log($"[IngredientDatabase] Fuzzy matched: '{ingredient.Name}' -> '{kvp.Value.name}'");
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Find and report unmatched ingredients
+            List<string> unmatchedIngredients = new List<string>();
+            foreach (var category in _categories)
+            {
+                if (category.Ingredients == null) continue;
+                
+                string folderName = categoryFolders.ContainsKey(category.CategoryType) 
+                    ? categoryFolders[category.CategoryType] 
+                    : category.CategoryType.ToString();
+                
+                string folderPath = $"Assets/Sprites/Ingredients/{folderName}";
+                
+                if (!UnityEditor.AssetDatabase.IsValidFolder(folderPath))
+                {
+                    foreach (var ingredient in category.Ingredients)
+                    {
+                        if (ingredient.Icon == null)
+                        {
+                            unmatchedIngredients.Add($"{ingredient.Name} (Category: {folderName} - Folder missing!)");
+                        }
+                    }
+                    continue;
+                }
+                
+                string[] textureGuids = UnityEditor.AssetDatabase.FindAssets("t:Texture2D", new[] { folderPath });
+                HashSet<string> availableSpriteNames = new HashSet<string>();
+                
+                foreach (string guid in textureGuids)
+                {
+                    string assetPath = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
+                    string fileName = System.IO.Path.GetFileNameWithoutExtension(assetPath);
+                    availableSpriteNames.Add(NormalizeName(fileName));
+                }
+                
+                foreach (var ingredient in category.Ingredients)
+                {
+                    if (ingredient.Icon == null)
+                    {
+                        string normalizedName = NormalizeName(ingredient.Name);
+                        string suggestion = "";
+                        
+                        // Find closest match
+                        foreach (var spriteName in availableSpriteNames)
+                        {
+                            if (spriteName.Contains(normalizedName) || normalizedName.Contains(spriteName))
+                            {
+                                suggestion = $" (Found similar: {spriteName})";
+                                break;
+                            }
+                        }
+                        
+                        unmatchedIngredients.Add($"{ingredient.Name} (Category: {folderName}{suggestion})");
+                    }
+                }
+            }
+            
+            UnityEditor.EditorUtility.SetDirty(this);
+            Debug.Log($"[IngredientDatabase] Scan complete! Matched {matchedCount} out of {totalIngredients} ingredients with sprites.");
+            
+            if (unmatchedIngredients.Count > 0)
+            {
+                Debug.LogWarning($"[IngredientDatabase] {unmatchedIngredients.Count} ingredient(s) without sprites:");
+                foreach (var unmatched in unmatchedIngredients)
+                {
+                    Debug.LogWarning($"  - {unmatched}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Normalize a name for matching (lowercase, remove spaces, remove file extensions, remove diacritics)
+        /// </summary>
+        private string NormalizeName(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return "";
+            
+            // Remove file extension if present
+            name = System.IO.Path.GetFileNameWithoutExtension(name);
+            
+            // Remove diacritics (accents) - convert è, é, ê, etc. to e
+            name = RemoveDiacritics(name);
+            
+            // Convert to lowercase and remove spaces/special characters for matching
+            return name.ToLowerInvariant().Replace(" ", "").Replace("-", "").Replace("_", "").Replace("'", "");
+        }
+        
+        /// <summary>
+        /// Remove diacritics (accents) from a string
+        /// </summary>
+        private string RemoveDiacritics(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return text;
+            
+            var normalizedString = text.Normalize(System.Text.NormalizationForm.FormD);
+            var stringBuilder = new System.Text.StringBuilder();
+            
+            foreach (var c in normalizedString)
+            {
+                var unicodeCategory = System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != System.Globalization.UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+            
+            return stringBuilder.ToString().Normalize(System.Text.NormalizationForm.FormC);
         }
 #endif
 

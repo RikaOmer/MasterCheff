@@ -4,7 +4,7 @@ This document outlines the remaining setup and configuration steps to get the AI
 
 ---
 
-## 1. Install Photon PUN2
+## 1. Install Photon PUN2 ✅ COMPLETE
 
 The game uses Photon PUN2 for multiplayer networking.
 
@@ -30,7 +30,7 @@ After installation, configure Photon:
 
 ---
 
-## 2. Set Up the Relay Backend
+## 2. Set Up the Relay Backend ✅ COMPLETE
 
 The game requires a backend server to securely call the OpenAI API for AI judging without exposing API keys to clients.
 
@@ -104,65 +104,108 @@ In your Unity scene, find the `RelayAPIClient` component and set:
 
 ---
 
-## 3. Create Unity Scenes
+## 3. Create Unity Scenes ⚠️ PARTIALLY COMPLETE
 
 Create the following scenes in `Assets/Scenes/`:
 
-| Scene | Purpose |
-|-------|---------|
-| `Loading.unity` | Initial loading, manager initialization |
-| `MainMenu.unity` | Title screen, play button |
-| `Lobby.unity` | Matchmaking, room management |
-| `Gameplay.unity` | Main game loop |
+| Scene | Purpose | Status |
+|-------|---------|--------|
+| `Loading.unity` | Initial loading, manager initialization | ✅ Complete |
+| `MainMenu.unity` | Title screen, play button | ❌ Missing UI |
+| `Lobby.unity` | Matchmaking, room management | ⚠️ Partially Complete |
+| `Gameplay.unity` | Main game loop | ✅ Complete |
 
-### Scene Setup:
+### Scene Setup Status:
 
-#### Loading Scene:
-- Add `GameBootstrapper` prefab
-- Add `LoadingScreen` UI
+#### Loading Scene: ✅ COMPLETE
+- ✅ `GameBootstrapper` prefab added
+- ✅ `LoadingPanel` with `LoadingScreen` component added
 
-#### Lobby Scene:
-- Create Canvas with `LobbyPanel`
-- Add `NetworkManager` (with PhotonView component)
+#### Lobby Scene: ⚠️ PARTIALLY COMPLETE
+- ✅ `NetworkManager` with `PhotonView` component added
+- ❌ **Missing**: Canvas with `LobbyPanel` component and all UI elements
 
-#### Gameplay Scene:
-- Create Canvas with:
-  - `CookingPanel`
-  - `JudgingPanel`
-  - `ResultsPanel`
-- Add `RoundLoopController`
-- Add `PowerUpManager` (with PhotonView component)
-- Add `AIJudgeService`
-- Add `RelayAPIClient`
+**To Complete:**
+1. Open the `Lobby.unity` scene in Unity
+2. Create a Canvas:
+   - GameObject → UI → Canvas
+   - Add CanvasScaler component (set to Scale With Screen Size, Reference Resolution: 1080x1920)
+   - Add GraphicRaycaster component
+3. Create LobbyPanel GameObject:
+   - Create empty GameObject as child of Canvas, name it "LobbyPanel"
+   - Add RectTransform (anchor: stretch-stretch, size: 0,0)
+   - Add the `LobbyPanel` component (Scripts/UI/Panels/LobbyPanel.cs)
+4. Create and assign all required UI elements in the Inspector:
+   - **Player Name**: TMP_InputField for player name input
+   - **Quick Match**: Button and TextMeshProUGUI for quick match button
+   - **Room Code**: TMP_InputField for room code, Create Room button, Join Room button
+   - **Room Info Panel**: GameObject panel, room code display text, copy code button, leave room button
+   - **Ready Button**: Button and TextMeshProUGUI for ready status
+   - **Player List**: Transform container for player list items, PlayerListItem prefab reference
+   - **Player Count**: TextMeshProUGUI for displaying player count
+   - **Status**: TextMeshProUGUI for status messages, loading indicator GameObject
+   - **Start Game**: Button and TextMeshProUGUI (only visible to master client)
+   - **Connection**: Connection panel GameObject, connect button, connection status text
+   
+   **Note**: This is a complex setup. Consider using the Scene Setup Wizard (MasterCheff → Scene Setup Wizard) to automatically create the basic structure, then manually assign the references in the Inspector.
+
+#### Gameplay Scene: ✅ COMPLETE
+- ✅ Canvas with all panels:
+  - ✅ `CookingPanel`
+  - ✅ `JudgingPanel`
+  - ✅ `ResultsPanel`
+- ✅ `RoundLoopController` added
+- ✅ `PowerUpManager` with `PhotonView` component added
+- ✅ `AIJudgeService` added
+- ✅ `RelayAPIClient` added
+
+#### MainMenu Scene: ❌ INCOMPLETE
+- ❌ **Missing**: Canvas
+- ❌ **Missing**: MainMenuPanel GameObject with UI elements
+- ❌ **Missing**: TitleText ("AI Chef Battle")
+- ❌ **Missing**: PlayButton that loads Lobby scene
+
+**To Complete:**
+1. Open the `MainMenu.unity` scene in Unity
+2. Create a Canvas:
+   - GameObject → UI → Canvas
+   - Add CanvasScaler component (set to Scale With Screen Size, Reference Resolution: 1080x1920)
+   - Add GraphicRaycaster component
+3. Create MainMenuPanel:
+   - Create empty GameObject as child of Canvas, name it "MainMenuPanel"
+   - Add RectTransform (anchor: stretch-stretch, size: 0,0)
+4. Create TitleText:
+   - Create TextMeshPro - Text (UI) as child of MainMenuPanel
+   - Name it "TitleText"
+   - Set text to "AI Chef Battle", font size 48, center alignment
+   - Position: Anchor (0.1, 0.7) to (0.9, 0.9)
+5. Create PlayButton:
+   - Create Button as child of MainMenuPanel
+   - Name it "PlayButton"
+   - Position: Anchor (0.3, 0.4) to (0.7, 0.5)
+   - Add TextMeshPro - Text (UI) as child, set text to "PLAY"
+   - Configure button onClick to load Lobby scene:
+     ```csharp
+     // In button's OnClick event, add:
+     Managers.SceneLoader.Instance.LoadScene(Constants.Scenes.LOBBY);
+     ```
 
 ---
 
-## 4. Create the Ingredient Database Asset
+## 4. Create the Ingredient Database Asset ✅ COMPLETE
 
-1. In Unity, right-click in the Project window
-2. Select **Create → MasterCheff → Ingredient Database**
-3. Name it `MainIngredientDatabase`
-4. Select the asset and in the Inspector, right-click the component header
-5. Select **Populate Default Ingredients** to fill with 70+ ingredients
-6. Assign this asset to the `RoundLoopController` component
+1. ✅ In Unity, right-click in the Project window
+2. ✅ Select **Create → MasterCheff → Ingredient Database**
+3. ✅ Name it `MainIngredientDatabase`
+4. ✅ Select the asset and in the Inspector, right-click the component header
+5. ✅ Select **Populate Default Ingredients** to fill with 70+ ingredients
+6. ✅ Assign this asset to the `RoundLoopController` component
 
-### Adding Ingredient Sprites
+### Adding Ingredient Sprites ✅ COMPLETE
 
-For each ingredient, you can assign a sprite image:
+✅ All 70 ingredients have been matched with sprites using the "Scan for Sprites" feature.
 
-1. Import your ingredient images into `Assets/Sprites/Ingredients/`
-   - Recommended size: 256x256 or 512x512 pixels
-   - Recommended format: PNG with transparency
-2. Create subfolders by category for organization:
-   - `Assets/Sprites/Ingredients/Proteins/`
-   - `Assets/Sprites/Ingredients/Vegetables/`
-   - `Assets/Sprites/Ingredients/Fruits/`
-   - `Assets/Sprites/Ingredients/Spices/`
-   - `Assets/Sprites/Ingredients/Dairy/`
-   - `Assets/Sprites/Ingredients/Sweets/`
-   - `Assets/Sprites/Ingredients/Herbs/`
-3. In the Ingredient Database asset, expand each category
-4. For each ingredient, drag the corresponding sprite to the **Icon** field
+**Note**: The "Scan for Sprites" context menu option automatically matches PNG files to ingredients (handles accents, special characters, etc.). Simply right-click the IngredientDatabase component header and select "Scan for Sprites" to auto-assign all matching sprite files.
 
 ---
 
